@@ -16,9 +16,18 @@ const PlaylistInput = () => {
   const router = useRouter();
 
   const handleStart = () => {
-    const playlistId = input.trim();
+    let playlistId = input.trim();
+
+    // clean url
+    if (playlistId.includes("https://www.youtube.com/playlist?list=")) {
+      playlistId = playlistId.replace(
+        "https://www.youtube.com/playlist?list=",
+        ""
+      );
+    }
 
     if (!playlistId) return;
+
     router.push(`/quizz/${playlistId}`);
   };
 

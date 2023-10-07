@@ -11,7 +11,7 @@ const Choices = ({}) => {
   if (videos.some((v) => !v.name)) return <Loader />;
 
   return (
-    <section className="choice grid gap-6 grid-cols-2">
+    <section className="choice grid gap-6 grid-cols-1 lg:grid-cols-2 w-auto max-w-[90vh]">
       <Button
         className="h-auto text-lg p-6 break-words bg-green-400 hover:bg-green-600"
         onClick={() => setChoice(videos[0].id)}

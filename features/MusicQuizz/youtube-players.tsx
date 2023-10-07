@@ -107,7 +107,7 @@ const YoutubePlayers = () => {
         </Button>
       </div>
 
-      <section style={{ display: show ? "flex" : "none" }}>
+      <section className={`${show ? "flex" : "hidden"} flex-col lg:flex-row`}>
         <YouTube
           onReady={async (e) => {
             e.target.setShuffle(true);
