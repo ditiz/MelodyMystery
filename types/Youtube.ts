@@ -1,0 +1,126 @@
+export type YouTubePlayer = {
+  addEventListener: (
+    event: string,
+    listener: (...args: Array<any>) => any
+  ) => void;
+  destroy: () => void;
+  getAvailablePlaybackRates: () => ReadonlyArray<number>;
+  getAvailableQualityLevels: () => ReadonlyArray<string>;
+  getCurrentTime: () => number;
+  getDuration: () => number;
+  getIframe: () => Record<string, any>;
+  getOption: () => any;
+  getOptions: () => any;
+  setOption: () => void;
+  setOptions: () => void;
+  cuePlaylist: (
+    playlist: string | ReadonlyArray<string>,
+    index?: number,
+    startSeconds?: number,
+    suggestedQuality?: string
+  ) =>
+    | void
+    | ((arg0: {
+        listType: string;
+        list?: string;
+        index?: number;
+        startSeconds?: number;
+        suggestedQuality?: string;
+      }) => void);
+  loadPlaylist: (
+    playlist: string | ReadonlyArray<string>,
+    index?: number,
+    startSeconds?: number,
+    suggestedQuality?: string
+  ) =>
+    | void
+    | ((arg0: {
+        listType: string;
+        list?: string;
+        index?: number;
+        startSeconds?: number;
+        suggestedQuality?: string;
+      }) => void);
+  getPlaylist: () => ReadonlyArray<string>;
+  getPlaylistIndex: () => number;
+  getPlaybackQuality: () => string;
+  getPlaybackRate: () => number;
+  getPlayerState: () => number;
+  getVideoEmbedCode: () => string;
+  getVideoLoadedFraction: () => number;
+  getVideoUrl: () => string;
+  getVolume: () => number;
+  cueVideoById: (
+    videoId: string,
+    startSeconds?: number,
+    suggestedQuality?: string
+  ) =>
+    | void
+    | ((arg0: {
+        videoId: string;
+        startSeconds?: number;
+        endSeconds?: number;
+        suggestedQuality?: string;
+      }) => void);
+  cueVideoByUrl: (
+    mediaContentUrl: string,
+    startSeconds?: number,
+    suggestedQuality?: string
+  ) =>
+    | void
+    | ((arg0: {
+        mediaContentUrl: string;
+        startSeconds?: number;
+        endSeconds?: number;
+        suggestedQuality?: string;
+      }) => void);
+  loadVideoByUrl: (
+    mediaContentUrl: string,
+    startSeconds?: number,
+    suggestedQuality?: string
+  ) =>
+    | void
+    | ((arg0: {
+        mediaContentUrl: string;
+        startSeconds?: number;
+        endSeconds?: number;
+        suggestedQuality?: string;
+      }) => void);
+  loadVideoById: (
+    videoId: string,
+    startSeconds?: number,
+    suggestedQuality?: string
+  ) =>
+    | void
+    | ((arg0: {
+        videoId: string;
+        startSeconds?: number;
+        endSeconds?: number;
+        suggestedQuality?: string;
+      }) => void);
+  isMuted: () => boolean;
+  mute: () => void;
+  nextVideo: () => void;
+  pauseVideo: () => void;
+  playVideo: () => void;
+  playVideoAt: (index: number) => void;
+  previousVideo: () => void;
+  removeEventListener: (
+    event: string,
+    listener: (...args: Array<any>) => any
+  ) => void;
+  seekTo: (seconds: number, allowSeekAhead: boolean) => void;
+  setLoop: (loopPlaylists: boolean) => void;
+  setPlaybackQuality: (suggestedQuality: string) => void;
+  setPlaybackRate: (suggestedRate: number) => void;
+  setShuffle: (shufflePlaylist: boolean) => void;
+  setSize: (width: number, height: number) => Record<string, any>;
+  setVolume: (volume: number) => void;
+  stopVideo: () => void;
+  unMute: () => void;
+  getVideoData: () => {
+    title: string;
+    video_id: string;
+    [x: string]: unknown;
+  };
+};
