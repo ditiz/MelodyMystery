@@ -17,6 +17,7 @@ const PlaylistInput = () => {
 
   const handleStart = () => {
     const playlistId = input.trim();
+
     if (!playlistId) return;
     router.push(`/quizz/${playlistId}`);
   };

@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import {
   currentVideoIdAtom,
@@ -10,18 +12,21 @@ import { useParams, useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import YouTube, { YouTubeEvent } from "react-youtube";
 
+// Get random time between 45 and 90 seconds
+function getRandomTime() {
+  return Math.floor(Math.random() * (90 - 45 + 1) + 45);
+}
+
 const YoutubePlayers = () => {
-  const [show, setShow] = useState(true);
+  const [show, setShow] = useState(false);
 
   const { playlistId } = useParams();
   const router = useRouter();
 
-  const [, setPlayer] = useAtom(playerAtom);
+  const [player, setPlayer] = useAtom(playerAtom);
   const [videos, setVideos] = useAtom(videosAtom);
   const [currentVideoId, setCurrentVideoId] = useAtom(currentVideoIdAtom);
   const [, setError] = useAtom(errorsAtom);
-
-  console.log(playlistId);
 
   const otherVideosId = useMemo(
     () => videos.filter((v) => v.id !== currentVideoId),
@@ -38,7 +43,6 @@ const YoutubePlayers = () => {
     const playlistIds = e.target.getPlaylist();
     if (playlistIds) {
       if (playlistIds.length < 4) {
-        console.log("playlistIds", playlistIds);
         setError((errs) => [
           ...errs,
           {
@@ -50,9 +54,18 @@ const YoutubePlayers = () => {
         return;
       }
 
-      const randomVideos = [...Array(3)]
-        .map(() => playlistIds[Math.floor(Math.random() * playlistIds.length)])
-        .map((id) => ({ id }));
+      let randomVideos: { id: string }[];
+      do {
+        randomVideos = [...Array(3)]
+          .map(
+            () => playlistIds[Math.floor(Math.random() * playlistIds.length)]
+          )
+          .map((id) => ({ id }));
+      } while (
+        [...randomVideos, mainVideo].filter(
+          (v, i, a) => a.findIndex((t) => t.id === v.id) === i
+        ).length < 4
+      );
 
       const randomisedVideo = [...randomVideos, mainVideo].sort(
         () => 0.5 - Math.random()
@@ -75,27 +88,44 @@ const YoutubePlayers = () => {
 
   return (
     <article className="flex flex-col items-center gap-2">
-      <Button onClick={() => setShow((v) => !v)}>Show players</Button>
+      <div className="flex gap-2">
+        <Button onClick={() => setShow((v) => !v)}>Show players</Button>
+        <Button
+          onClick={async () => {
+            player?.setShuffle(true);
+            player?.nextVideo();
+
+            do {
+              await new Promise((resolve) => setTimeout(resolve, 100));
+            } while (!player?.getVideoData().video_id);
+
+            loadVideos({ target: player } as YouTubeEvent);
+            player?.seekTo(getRandomTime(), true);
+          }}
+        >
+          try to load again
+        </Button>
+      </div>
 
       <section style={{ display: show ? "flex" : "none" }}>
         <YouTube
-          onReady={(e) => {
+          onReady={async (e) => {
             e.target.setShuffle(true);
             e.target.nextVideo();
             e.target.pauseVideo();
 
-            console.log("video", e.target.getVideoData());
-
             // wait for the next video to be loaded
-            setTimeout(() => {
-              setPlayer(e.target);
-            }, 1000);
+            while (!e.target.getVideoData().video_id) {
+              await new Promise((resolve) => setTimeout(resolve, 100));
+            }
+
+            setPlayer(e.target);
           }}
           onPlay={(e) => {
             const videoDataId = e.target.getVideoData().video_id;
 
             if (videoDataId && videoDataId !== currentVideoId) {
-              e.target.seekTo(60);
+              e.target.seekTo(getRandomTime(), true);
               loadVideos(e);
               setCurrentVideoId(videoDataId);
             }
