@@ -1,13 +1,10 @@
 "use client";
 
-import { Alert } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { errorsAtom } from "@/state/music-quizz";
-import { useAtom } from "jotai";
-import { X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import ErrorMessages from "./Alert";
 
 function cleanYoutubeVideoUrl(url: string) {
   const startIndex = url.indexOf("list=");
@@ -21,7 +18,6 @@ function cleanYoutubeVideoUrl(url: string) {
 
 const PlaylistInput = () => {
   const [input, setInput] = useState("");
-  const [errors, setErrors] = useAtom(errorsAtom);
 
   const router = useRouter();
 
@@ -46,24 +42,7 @@ const PlaylistInput = () => {
 
   return (
     <section className="grid gap-6">
-      {errors.length ? (
-        <div className="flex flex-col gap-4">
-          {errors.map((err) => (
-            <Alert key={err.message} variant={err.type}>
-              {err.message}
-              <Button
-                variant={"ghost"}
-                color="red"
-                size={"icon"}
-                className="absolute right-0 top-0"
-                onClick={() => setErrors([])}
-              >
-                {<X />}
-              </Button>
-            </Alert>
-          ))}
-        </div>
-      ) : null}
+      <ErrorMessages />
 
       <span>
         Exemple: <span>PL3QJxphXG1iCzpP9KcZU8EG5Z8O3HNb6X</span>

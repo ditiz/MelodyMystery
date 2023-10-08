@@ -1,4 +1,4 @@
-import PlaylistInput from "@/features/MusicQuizz/playlist-input";
+import PlaylistInput from "@/features/playlist-selection/playlist-input";
 
 export default function Home() {
   return (
