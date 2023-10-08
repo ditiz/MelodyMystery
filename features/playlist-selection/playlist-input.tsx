@@ -2,22 +2,19 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { errorsAtom, nbRoundAtom } from "@/state/music-quizz";
+import { useAtom } from "jotai";
+import { isNumber } from "lodash";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import ErrorMessages from "./Alert";
-
-function cleanYoutubeVideoUrl(url: string) {
-  const startIndex = url.indexOf("list=");
-
-  if (startIndex === -1) return url;
-
-  const endIndex = url.indexOf("&", startIndex);
-
-  return url.substring(startIndex + 5, endIndex);
-}
+import ErrorMessages from "./errors-message";
 
 const PlaylistInput = () => {
+  const [nbRound, setNbRound] = useAtom(nbRoundAtom);
+  const [, setErrors] = useAtom(errorsAtom);
+
   const [input, setInput] = useState("");
+  const [localNbRound, setLocalNbRound] = useState<number>(nbRound);
 
   const router = useRouter();
 
@@ -31,28 +28,75 @@ const PlaylistInput = () => {
         ""
       );
     } else if (playlistId.startsWith("https://www.youtube.com/watch")) {
-      console.log(cleanYoutubeVideoUrl(playlistId));
       playlistId = cleanYoutubeVideoUrl(playlistId)! ?? playlistId;
     }
 
-    if (!playlistId) return;
+    if (!playlistId) {
+      setErrors((e) => [
+        ...e,
+        {
+          type: "destructive",
+          message: "You have to give a youtube playlist identifier",
+        },
+      ]);
+      return;
+    }
 
+    if (
+      !isNumber(localNbRound) ||
+      localNbRound < 0 ||
+      Number.isNaN(localNbRound)
+    ) {
+      setErrors((e) => [
+        ...e,
+        { type: "destructive", message: "Number of round invalid" },
+      ]);
+      return;
+    }
+
+    setNbRound(localNbRound);
     router.push(`/quizz/${playlistId}`);
   };
 
   return (
-    <section className="grid gap-6">
+    <article className="grid gap-6">
       <ErrorMessages />
 
-      <span>
-        Exemple: <span>PL3QJxphXG1iCzpP9KcZU8EG5Z8O3HNb6X</span>
-      </span>
+      <section className="grid gap-2">
+        <div className="grid gap-2">
+          <h2>Playlist id</h2>
+          <small className="text-muted-foreground">
+            Exemple: <span>PL3QJxphXG1iCzpP9KcZU8EG5Z8O3HNb6X</span>
+          </small>
+          <Input onChange={(e) => setInput(e.target.value)} />
+        </div>
 
-      <Input onChange={(e) => setInput(e.target.value)} />
+        <div className="flex gap-2 items-center justify-between">
+          <h2>Number of round</h2>
+          <Input
+            type="number"
+            className="w-24"
+            value={localNbRound}
+            onChange={(e) => {
+              const value = parseInt(e.target.value);
+              setLocalNbRound(value);
+            }}
+          />
+        </div>
+      </section>
 
       <Button onClick={handleStart}>Start the game</Button>
-    </section>
+    </article>
   );
 };
 
+function cleanYoutubeVideoUrl(url: string) {
+  const startIndex = url.indexOf("list=");
+
+  if (startIndex === -1) return url;
+
+  const endIndex = url.indexOf("&", startIndex);
+
+  return url.substring(startIndex + 5, endIndex);
+}
 export default PlaylistInput;

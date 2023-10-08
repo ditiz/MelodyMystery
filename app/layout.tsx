@@ -9,7 +9,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Melody Mystery",
-  description: "Guess the song from your playlist",
+  description: "Guess the song from your Youtube playlists",
 };
 
 export default function RootLayout({

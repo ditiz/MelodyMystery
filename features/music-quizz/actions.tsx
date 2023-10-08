@@ -3,11 +3,14 @@
 import { Button } from "@/components/ui/button";
 import {
   choiceAtom,
+  currentRoundAtom,
   currentVideoIdAtom,
+  nbRoundAtom,
   playerAtom,
   videosAtom,
 } from "@/state/music-quizz";
 import { useAtom } from "jotai";
+import { useRouter } from "next/navigation";
 
 interface ActionsProps {}
 
@@ -16,6 +19,10 @@ const Actions = ({}: ActionsProps) => {
   const [choice, setChoice] = useAtom(choiceAtom);
   const [currentVideoId, setCurrentVideoId] = useAtom(currentVideoIdAtom);
   const [, setVideos] = useAtom(videosAtom);
+  const [currentRound, setCurrentRound] = useAtom(currentRoundAtom);
+  const [nbRound] = useAtom(nbRoundAtom);
+
+  const router = useRouter();
 
   const start = () => {
     player?.playVideo();
@@ -23,10 +30,19 @@ const Actions = ({}: ActionsProps) => {
   };
 
   const next = () => {
-    player?.nextVideo();
-    setCurrentVideoId(player?.getVideoData().video_id ?? null);
     setChoice(null);
     setVideos([]);
+
+    if (nbRound === currentRound) {
+      setCurrentRound(1);
+      router.push("/quizz/result");
+      return;
+    }
+
+    player?.nextVideo();
+    setCurrentVideoId(player?.getVideoData().video_id ?? null);
+
+    setCurrentRound((r) => r + 1);
   };
 
   return (
