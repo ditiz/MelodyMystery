@@ -12,6 +12,7 @@ import {
 import { useAtom } from "jotai";
 import { useParams, useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
+import { useTimer } from "react-timer-hook";
 import YouTube, { YouTubeEvent } from "react-youtube";
 
 // Get random time between 45 and 90 seconds
@@ -19,9 +20,14 @@ function getRandomTime() {
   return Math.floor(Math.random() * (90 - 45 + 1) + 45);
 }
 
+const get5SecondsTimer = () => {
+  const time = new Date();
+  time.setSeconds(time.getSeconds() + 5);
+  return time;
+};
+
 const YoutubePlayers = () => {
   const [show, setShow] = useState(false);
-  const [tries, setTries] = useAtom(nbTriesAtom);
 
   const { playlistId } = useParams();
   const router = useRouter();
@@ -31,11 +37,16 @@ const YoutubePlayers = () => {
   const [currentVideoId, setCurrentVideoId] = useAtom(currentVideoIdAtom);
   const [, setError] = useAtom(errorsAtom);
   const [choice] = useAtom(choiceAtom);
+  const [tries, setTries] = useAtom(nbTriesAtom);
 
   const otherVideosId = useMemo(
     () => videos.filter((v) => v.id !== currentVideoId),
     [videos, currentVideoId]
   );
+
+  const { restart, seconds } = useTimer({
+    expiryTimestamp: get5SecondsTimer(),
+  });
 
   const loadVideos = (e: YouTubeEvent) => {
     // main videos
@@ -76,6 +87,7 @@ const YoutubePlayers = () => {
       );
 
       setVideos(randomisedVideo);
+      restart(get5SecondsTimer());
     }
   };
 
@@ -92,7 +104,7 @@ const YoutubePlayers = () => {
 
   return (
     <article className="flex flex-col items-center gap-2">
-      {!choice ? (
+      {!choice && seconds === 0 ? (
         <div className="flex gap-2">
           <Button
             className={`${tries > 3 ? "block" : "hidden"}`}
