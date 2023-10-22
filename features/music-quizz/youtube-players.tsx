@@ -104,7 +104,7 @@ const YoutubePlayers = () => {
 
   return (
     <article className="flex flex-col items-center gap-2">
-      {!choice && seconds === 0 ? (
+      {!choice && videos.length !== 4 && seconds === 0 ? (
         <div className="flex gap-2">
           <Button
             className={`${tries > 3 ? "block" : "hidden"}`}

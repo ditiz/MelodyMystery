@@ -1,5 +1,6 @@
 import {
   choiceAtom,
+  currentRoundAtom,
   currentVideoIdAtom,
   errorsAtom,
   playerAtom,
@@ -14,6 +15,7 @@ export default function useResetQuizz() {
   const [, setCurrentVideoId] = useAtom(currentVideoIdAtom);
   const [, setError] = useAtom(errorsAtom);
   const [, setChoice] = useAtom(choiceAtom);
+  const [, setCurrentRound] = useAtom(currentRoundAtom);
 
   useEffect(() => {
     setPlayer(null);
@@ -21,5 +23,13 @@ export default function useResetQuizz() {
     setCurrentVideoId(null);
     setError([]);
     setChoice(null);
-  }, [setChoice, setCurrentVideoId, setError, setPlayer, setVideos]);
+    setCurrentRound(0);
+  }, [
+    setChoice,
+    setCurrentVideoId,
+    setError,
+    setPlayer,
+    setVideos,
+    setCurrentRound,
+  ]);
 }
