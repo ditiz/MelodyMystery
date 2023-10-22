@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { playlistHistory } from "@/lib/constants";
 import { errorsAtom, nbRoundAtom } from "@/state/music-quizz";
 import { useAtom } from "jotai";
 import { isNumber } from "lodash";
@@ -54,6 +55,11 @@ const PlaylistInput = () => {
       return;
     }
 
+    localStorage.setItem(
+      playlistHistory,
+      `${localStorage.getItem(playlistHistory) ?? ""};${playlistId}`
+    );
+
     setNbRound(localNbRound);
     router.push(`/quizz/${playlistId}`);
   };
@@ -64,7 +70,7 @@ const PlaylistInput = () => {
 
       <section className="grid gap-2">
         <div className="grid gap-2">
-          <h2>Playlist id</h2>
+          <h2 className="text-2xl font-bold pb-2">Playlist id</h2>
           <small className="text-muted-foreground">
             Exemple: <span>PL3QJxphXG1iCzpP9KcZU8EG5Z8O3HNb6X</span>
           </small>

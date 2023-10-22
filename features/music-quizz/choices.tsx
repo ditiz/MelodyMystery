@@ -18,11 +18,8 @@ const buttonsColors = [
   "bg-purple-400 hover:bg-purple-600",
 ];
 
-const Choices = ({}) => {
-  const [choice, setChoice] = useAtom(choiceAtom);
+const Choices = () => {
   const [videos] = useAtom(videosAtom);
-  const [currentVideoId] = useAtom(currentVideoIdAtom);
-  const [, setScore] = useAtom(scoreAtom);
 
   if (videos.length !== 4) return null;
   if (videos.some((v) => !v.name)) return <Loader />;
@@ -51,18 +48,6 @@ const ButtonChoice = ({ index, video }: ButtonChoiceProps) => {
       setScore((s) => s + 100);
     }
   };
-
-  console.log(
-    choice,
-    video.id,
-    currentVideoId,
-    choice && choice === video.id,
-    choice && choice === video.id
-      ? choice === currentVideoId
-        ? "outline-green-500"
-        : "outline-red-500"
-      : "outline-transparent"
-  );
 
   return (
     <Button
