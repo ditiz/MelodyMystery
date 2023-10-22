@@ -11,7 +11,7 @@ import {
 } from "@/state/music-quizz";
 import { useAtom } from "jotai";
 import { useParams, useRouter } from "next/navigation";
-import { useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useTimer } from "react-timer-hook";
 import YouTube, { YouTubeEvent } from "react-youtube";
 
@@ -39,14 +39,13 @@ const YoutubePlayers = () => {
   const [choice] = useAtom(choiceAtom);
   const [tries, setTries] = useAtom(nbTriesAtom);
 
-  const otherVideosId = useMemo(
-    () => videos.filter((v) => v.id !== currentVideoId),
-    [videos, currentVideoId]
-  );
-
   const { restart, seconds } = useTimer({
     expiryTimestamp: get5SecondsTimer(),
   });
+
+  useEffect(() => {
+    if (videos.length === 0) restart(get5SecondsTimer());
+  }, [videos.length, restart]);
 
   const loadVideos = (e: YouTubeEvent) => {
     // main videos
@@ -87,19 +86,7 @@ const YoutubePlayers = () => {
       );
 
       setVideos(randomisedVideo);
-      restart(get5SecondsTimer());
     }
-  };
-
-  const setVideoName = (e: YouTubeEvent, id: string) => {
-    setVideos((vs) =>
-      vs.reduce<{ id: string; name?: string }[]>((acc, v) => {
-        if (v.id === id) {
-          return [...acc, { ...v, name: e.target.getVideoData()?.title }];
-        }
-        return [...acc, v];
-      }, [])
-    );
   };
 
   return (
@@ -163,19 +150,6 @@ const YoutubePlayers = () => {
             height: "195",
           }}
         />
-
-        {otherVideosId.map((v) => (
-          <YouTube
-            key={v.id}
-            videoId={v?.id}
-            onReady={(e) => setVideoName(e, v?.id)}
-            onStateChange={(e) => setVideoName(e, v?.id)}
-            opts={{
-              width: "320",
-              height: "195",
-            }}
-          />
-        ))}
       </section>
     </article>
   );

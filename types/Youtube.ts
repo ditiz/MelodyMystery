@@ -124,3 +124,24 @@ export type YouTubePlayer = {
     [x: string]: unknown;
   };
 };
+
+export interface Video {
+  id: string;
+  name?: string;
+}
+export interface VideoData {
+  thumbnail_height: number;
+  version: string;
+  url: string;
+  height: number;
+  provider_url: string;
+  type: string;
+  html: string;
+  thumbnail_url: string;
+  author_url: string;
+  author_name: string;
+  title: string;
+  width: number;
+  thumbnail_width: number;
+  provider_name: string;
+}
