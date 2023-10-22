@@ -6,6 +6,7 @@ import {
   currentRoundAtom,
   currentVideoIdAtom,
   nbRoundAtom,
+  nbTriesAtom,
   playerAtom,
   videosAtom,
 } from "@/state/music-quizz";
@@ -21,17 +22,21 @@ const Actions = ({}: ActionsProps) => {
   const [, setVideos] = useAtom(videosAtom);
   const [currentRound, setCurrentRound] = useAtom(currentRoundAtom);
   const [nbRound] = useAtom(nbRoundAtom);
+  const [, setNbTries] = useAtom(nbTriesAtom);
 
   const router = useRouter();
 
   const start = () => {
-    player?.playVideo();
-    setCurrentVideoId(player?.getVideoData()?.video_id ?? null);
+    if (player?.playVideo) {
+      player.playVideo();
+      setCurrentVideoId(player?.getVideoData()?.video_id ?? null);
+    }
   };
 
   const next = () => {
     setChoice(null);
     setVideos([]);
+    setNbTries(0);
 
     if (nbRound === currentRound) {
       setCurrentRound(1);

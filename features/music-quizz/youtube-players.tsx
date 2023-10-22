@@ -2,8 +2,10 @@
 
 import { Button } from "@/components/ui/button";
 import {
+  choiceAtom,
   currentVideoIdAtom,
   errorsAtom,
+  nbTriesAtom,
   playerAtom,
   videosAtom,
 } from "@/state/music-quizz";
@@ -19,6 +21,7 @@ function getRandomTime() {
 
 const YoutubePlayers = () => {
   const [show, setShow] = useState(false);
+  const [tries, setTries] = useAtom(nbTriesAtom);
 
   const { playlistId } = useParams();
   const router = useRouter();
@@ -27,6 +30,7 @@ const YoutubePlayers = () => {
   const [videos, setVideos] = useAtom(videosAtom);
   const [currentVideoId, setCurrentVideoId] = useAtom(currentVideoIdAtom);
   const [, setError] = useAtom(errorsAtom);
+  const [choice] = useAtom(choiceAtom);
 
   const otherVideosId = useMemo(
     () => videos.filter((v) => v.id !== currentVideoId),
@@ -88,24 +92,32 @@ const YoutubePlayers = () => {
 
   return (
     <article className="flex flex-col items-center gap-2">
-      <div className="flex gap-2">
-        <Button onClick={() => setShow((v) => !v)}>Show players</Button>
-        <Button
-          onClick={async () => {
-            player?.setShuffle(true);
-            player?.nextVideo();
+      {!choice ? (
+        <div className="flex gap-2">
+          <Button
+            className={`${tries > 3 ? "block" : "hidden"}`}
+            onClick={() => setShow((v) => !v)}
+          >
+            Show players
+          </Button>
+          <Button
+            onClick={async () => {
+              player?.setShuffle(true);
+              player?.nextVideo();
 
-            do {
-              await new Promise((resolve) => setTimeout(resolve, 100));
-            } while (!player?.getVideoData().video_id);
+              do {
+                await new Promise((resolve) => setTimeout(resolve, 100));
+              } while (!player?.getVideoData().video_id);
 
-            loadVideos({ target: player } as YouTubeEvent);
-            player?.seekTo(getRandomTime(), true);
-          }}
-        >
-          try to load again
-        </Button>
-      </div>
+              loadVideos({ target: player } as YouTubeEvent);
+              player?.seekTo(getRandomTime(), true);
+              setTries((t) => t + 1);
+            }}
+          >
+            try to load again
+          </Button>
+        </div>
+      ) : null}
 
       <section className={`${show ? "flex" : "hidden"} flex-col lg:flex-row`}>
         <YouTube

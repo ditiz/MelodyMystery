@@ -6,6 +6,7 @@ import {
   scoreAtom,
   videosAtom,
 } from "@/state/music-quizz";
+import clsx from "clsx";
 import { useAtom } from "jotai";
 
 const buttonsClassName = "h-auto lg:text-lg lg:p-6 break-words";
@@ -26,6 +27,24 @@ const Choices = ({}) => {
   if (videos.length !== 4) return null;
   if (videos.some((v) => !v.name)) return <Loader />;
 
+  return (
+    <section className="choice grid gap-6 grid-cols-1 lg:grid-cols-2 w-auto max-w-[90vh]">
+      {videos.map((v, i) => (
+        <ButtonChoice key={v.id} index={i} video={v} />
+      ))}
+    </section>
+  );
+};
+
+interface ButtonChoiceProps {
+  index: number;
+  video: { id: string; name?: string };
+}
+const ButtonChoice = ({ index, video }: ButtonChoiceProps) => {
+  const [choice, setChoice] = useAtom(choiceAtom);
+  const [currentVideoId] = useAtom(currentVideoIdAtom);
+  const [, setScore] = useAtom(scoreAtom);
+
   const handleClick = (videoId: string) => {
     setChoice(videoId);
     if (videoId === currentVideoId) {
@@ -33,20 +52,36 @@ const Choices = ({}) => {
     }
   };
 
-  return (
-    <section className="choice grid gap-6 grid-cols-1 lg:grid-cols-2 w-auto max-w-[90vh]">
-      {videos.map((v, i) => (
-        <Button
-          key={v.id}
-          className={`${buttonsClassName} ${buttonsColors[i]}`}
-          onClick={() => handleClick(v.id)}
-          disabled={!!choice}
-        >
-          {v?.name}
-        </Button>
-      ))}
-    </section>
+  console.log(
+    choice,
+    video.id,
+    currentVideoId,
+    choice && choice === video.id,
+    choice && choice === video.id
+      ? choice === currentVideoId
+        ? "outline-green-500"
+        : "outline-red-500"
+      : "outline-transparent"
   );
-};
+
+  return (
+    <Button
+      className={clsx(
+        buttonsClassName,
+        buttonsColors[index],
+        "outline outline-offset-2",
+        choice && video.id === currentVideoId && "outline-green-500",
+        choice &&
+          choice === video.id &&
+          choice !== currentVideoId &&
+          "outline-red-500"
+      )}
+      onClick={() => handleClick(video.id)}
+      disabled={!!choice}
+    >
+      {video?.name}
+    </Button>
+  );
+}; 
 
 export default Choices;
