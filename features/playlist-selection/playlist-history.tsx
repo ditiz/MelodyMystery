@@ -4,9 +4,11 @@ import { Button } from "@/components/ui/button";
 import { playlistHistory } from "@/lib/constants";
 import { X } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const getHistory = () => {
+  if (typeof window === "undefined") return [];
+
   return (
     (localStorage.getItem(playlistHistory) ?? "")
       .split(";")
@@ -16,7 +18,12 @@ const getHistory = () => {
 };
 
 const PlaylistHistory = () => {
-  const [playlists, setPlaylists] = useState(getHistory);
+  const [playlists, setPlaylists] = useState<string[]>([]);
+
+  useEffect(() => {
+    setPlaylists(getHistory());
+  }, []);
+
   return (
     <article className="w-80">
       <h2 className="text-2xl font-bold pb-2">History</h2>
