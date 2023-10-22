@@ -15,7 +15,7 @@ const fetcher = (videos: { id: string }[]): Promise<VideoData[]> =>
 
 export default function useFetchVideoInfos() {
   const [videos, setVideos] = useAtom(videosAtom);
-  const [currentVideoId, setCurrentVideoId] = useAtom(currentVideoIdAtom);
+  const [currentVideoId] = useAtom(currentVideoIdAtom);
 
   console.log(videos);
 
@@ -25,8 +25,6 @@ export default function useFetchVideoInfos() {
   );
 
   const { data, isLoading, error } = useSWR(otherVideosId ?? [], fetcher);
-
-  console.log(videos);
 
   useEffect(() => {
     if (data) {

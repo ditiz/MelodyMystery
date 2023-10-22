@@ -65,20 +65,23 @@ const PlaylistInput = () => {
   };
 
   return (
-    <article className="grid gap-6">
+    <article className="grid gap-6 w-80">
       <ErrorMessages />
 
       <section className="grid gap-2">
         <div className="grid gap-2">
-          <h2 className="text-2xl font-bold pb-2">Playlist id</h2>
-          <small className="text-muted-foreground">
-            Exemple: <span>PL3QJxphXG1iCzpP9KcZU8EG5Z8O3HNb6X</span>
-          </small>
-          <Input onChange={(e) => setInput(e.target.value)} />
+          <h2 className="text-2xl font-bold pb-2">Game</h2>
+          <div>
+            <h3 className="font-bold">Playlist id</h3>
+            <small className="text-muted-foreground">
+              Exemple: <span>PL3QJxphXG1iCzpP9KcZU8EG5Z8O3HNb6X</span>
+            </small>
+            <Input onChange={(e) => setInput(e.target.value)} />
+          </div>
         </div>
 
         <div className="flex gap-2 items-center justify-between">
-          <h2>Number of round</h2>
+          <h3 className="font-bold">Number of round</h3>
           <Input
             type="number"
             className="w-24"
