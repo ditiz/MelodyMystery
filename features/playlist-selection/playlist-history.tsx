@@ -24,23 +24,27 @@ const PlaylistHistory = () => {
     setPlaylists(getHistory());
   }, []);
 
+  if (!playlists.length) {
+    return null;
+  }
+
   return (
     <article className="w-80">
       <h2 className="text-2xl font-bold pb-2">History</h2>
 
       <ul className="flex flex-col gap-4">
         {playlists.map((playlistId) => (
-          <li key={playlistId} className="flex items-center relative pr-12">
-            <Link
-              href={`/quizz/${playlistId}`}
-              className="transition-all rounded outline outline-offset-2 outline-gray-800 hover:outline-gray-600 px-2 break-words"
-            >
+          <li
+            key={playlistId}
+            className="flex items-center justify-between relative transition-all rounded outline outline-offset-2 outline-gray-800 hover:outline-gray-600 px-2"
+          >
+            <Link href={`/quizz/${playlistId}`} className="w-10/12 break-words">
               {playlistId}
             </Link>
             <Button
               variant={"ghost"}
               size={"icon"}
-              className="absolute right-0 top-0"
+              className=""
               onClick={() => {
                 const newPlaylists = playlists.filter((p) => p !== playlistId);
                 localStorage.setItem(playlistHistory, newPlaylists.join(";"));
