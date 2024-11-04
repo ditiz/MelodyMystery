@@ -1,5 +1,5 @@
-import { QuizzError } from "@/types/Error";
-import { Video, YouTubePlayer } from "@/types/Youtube";
+import type { QuizzError } from "@/types/Error";
+import type { Video, YouTubePlayer } from "@/types/Youtube";
 import { atom } from "jotai";
 
 export const choiceAtom = atom<string | null>(null);
