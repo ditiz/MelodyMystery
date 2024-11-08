@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { getRandomTime } from "@/lib/utils";
 import {
 	choiceAtom,
 	currentVideoIdAtom,
@@ -13,12 +14,8 @@ import { useAtom } from "jotai";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useTimer } from "react-timer-hook";
-import YouTube, { YouTubeEvent } from "react-youtube";
-
-// Get random time between 45 and 90 seconds
-function getRandomTime() {
-	return Math.floor(Math.random() * (90 - 45 + 1) + 45);
-}
+import YouTube, { type YouTubeEvent } from "react-youtube";
+import TryAgainButton from "./try-again-button";
 
 const get5SecondsTimer = () => {
 	const time = new Date();
@@ -37,7 +34,7 @@ const YoutubePlayers = () => {
 	const [currentVideoId, setCurrentVideoId] = useAtom(currentVideoIdAtom);
 	const [, setError] = useAtom(errorsAtom);
 	const [choice] = useAtom(choiceAtom);
-	const [tries, setTries] = useAtom(nbTriesAtom);
+	const [tries] = useAtom(nbTriesAtom);
 
 	const { restart, seconds } = useTimer({
 		expiryTimestamp: get5SecondsTimer(),
@@ -99,28 +96,14 @@ const YoutubePlayers = () => {
 					>
 						Show players
 					</Button>
-					<Button
-						onClick={async () => {
-							player?.setShuffle(true);
-							player?.nextVideo();
-
-							do {
-								await new Promise((resolve) => setTimeout(resolve, 100));
-							} while (!player?.getVideoData().video_id);
-
-							loadVideos({ target: player } as YouTubeEvent);
-							player?.seekTo(getRandomTime(), true);
-							setTries((t) => t + 1);
-						}}
-					>
-						try to load again
-					</Button>
+					<TryAgainButton player={player} loadVideos={loadVideos} />
 				</div>
 			) : null}
 
 			<section className={`${show ? "flex" : "hidden"} flex-col lg:flex-row`}>
 				<YouTube
-					onReady={async (e) => {
+					onReady={async (e: YouTubeEvent) => {
+						console.log(e);
 						e.target.setShuffle(true);
 						e.target.nextVideo();
 						e.target.pauseVideo();
@@ -135,7 +118,7 @@ const YoutubePlayers = () => {
 
 						setPlayer(e.target);
 					}}
-					onPlay={(e) => {
+					onPlay={(e: YouTubeEvent) => {
 						const videoDataId = e.target.getVideoData().video_id;
 
 						if (videoDataId && videoDataId !== currentVideoId) {
