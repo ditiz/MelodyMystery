@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import {
 	choiceAtom,
 	currentVideoIdAtom,
+	responseTimeAtom,
 	scoreAtom,
 	videosAtom,
 } from "@/state/music-quizz";
@@ -41,11 +42,14 @@ const ButtonChoice = ({ index, video }: ButtonChoiceProps) => {
 	const [choice, setChoice] = useAtom(choiceAtom);
 	const [currentVideoId] = useAtom(currentVideoIdAtom);
 	const [, setScore] = useAtom(scoreAtom);
+	const [responseTime] = useAtom(responseTimeAtom);
 
 	const handleClick = (videoId: string) => {
 		setChoice(videoId);
 		if (videoId === currentVideoId) {
-			setScore((s) => s + 100);
+			const seconds = (new Date().getTime() - responseTime.getTime()) / 1000;
+			const score = Math.max(0, Math.round(100 - seconds));
+			setScore((s) => s + score);
 		}
 	};
 
