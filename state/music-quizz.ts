@@ -1,5 +1,5 @@
-import { QuizzError } from "@/types/Error";
-import { Video, YouTubePlayer } from "@/types/Youtube";
+import type { QuizzError } from "@/types/Error";
+import type { Video, YouTubePlayer } from "@/types/Youtube";
 import { atom } from "jotai";
 
 export const choiceAtom = atom<string | null>(null);
@@ -11,3 +11,4 @@ export const scoreAtom = atom<number>(0);
 export const nbRoundAtom = atom<number>(10);
 export const currentRoundAtom = atom<number>(1);
 export const nbTriesAtom = atom<number>(0);
+export const responseTimeAtom = atom<Date>(new Date());
