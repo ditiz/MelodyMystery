@@ -8,44 +8,44 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Melody Mystery",
-  description: "Guess the song from your Youtube playlists",
+	title: "Melody Mystery",
+	description: "Guess the song from your Youtube playlists",
 };
 
 export default function RootLayout({
-  children,
+	children,
 }: {
-  children: React.ReactNode;
+	children: React.ReactNode;
 }) {
-  return (
-    <html lang="en">
-      <body className={inter.className}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <>
-            <header>
-              <nav>
-                <ul className="flex items-center justify-around p-2">
-                  <li>
-                    <Link href={"/"}>
-                      <h1>Melody Mystery</h1>
-                    </Link>
-                  </li>
-                  <li>
-                    <ModeToggle />
-                  </li>
-                </ul>
-              </nav>
-            </header>
+	return (
+		<html lang="en">
+			<body className={inter.className}>
+				<ThemeProvider
+					attribute="class"
+					defaultTheme="system"
+					enableSystem
+					disableTransitionOnChange
+				>
+					<>
+						<header>
+							<nav>
+								<ul className="flex items-center justify-around p-2">
+									<li>
+										<Link href={"/"}>
+											<h1>Melody Mystery</h1>
+										</Link>
+									</li>
+									<li>
+										<ModeToggle />
+									</li>
+								</ul>
+							</nav>
+						</header>
 
-            {children}
-          </>
-        </ThemeProvider>
-      </body>
-    </html>
-  );
+						{children}
+					</>
+				</ThemeProvider>
+			</body>
+		</html>
+	);
 }
