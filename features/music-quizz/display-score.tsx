@@ -1,7 +1,7 @@
 import { currentRoundAtom, nbRoundAtom, scoreAtom } from "@/state/music-quizz";
 import { useAtom } from "jotai";
 
-const Score = () => {
+const DisplayScore = () => {
 	const [score] = useAtom(scoreAtom);
 	const [nbRound] = useAtom(nbRoundAtom);
 	const [currentRound] = useAtom(currentRoundAtom);
@@ -22,4 +22,4 @@ const Score = () => {
 	);
 };
 
-export default Score;
+export default DisplayScore;
