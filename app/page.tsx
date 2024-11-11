@@ -1,5 +1,6 @@
 "use client";
 
+import ErrorMessages from "@/features/playlist-selection/errors-message";
 import NbRoundInput from "@/features/playlist-selection/nb-round-input";
 import PlaylistHistory from "@/features/playlist-selection/playlist-history";
 import PlaylistInput from "@/features/playlist-selection/playlist-input";
@@ -14,13 +15,16 @@ export default function Home() {
 			className="
 				grid md:grid-cols-2 
 				p-24 sm:p-2 gap-8
+				h-full
+				justify-items-center
 			"
 		>
-			<div className="grid gap-8 justify-self-end">
+			<div className="flex flex-col gap-8 md:justify-self-end">
+				<ErrorMessages />
 				<NbRoundInput />
 				<PlaylistInput />
 			</div>
-			<div className="grid gap-8 justify-self-start">
+			<div className="flex flex-col gap-8 md:justify-self-start">
 				<PlaylistHistory />
 				<PlaylistPresets />
 			</div>

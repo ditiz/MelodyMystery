@@ -21,10 +21,9 @@ import { useAtom } from "jotai";
 import { CircleHelp } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import ErrorMessages from "./errors-message";
 
 const PlaylistInput = () => {
-	const [errors, setErrors] = useAtom(errorsAtom);
+	const [, setErrors] = useAtom(errorsAtom);
 
 	const [input, setInput] = useState("");
 
@@ -64,9 +63,7 @@ const PlaylistInput = () => {
 	};
 
 	return (
-		<article className={`grid ${errors.length ? "gap-6" : ""} w-80`}>
-			<ErrorMessages />
-
+		<article className={"grid w-80"}>
 			<Card className="grid gap-2 bg-muted/50">
 				<CardHeader>
 					<h2 className="text-2xl font-bold pb-2">Custom Playlist</h2>

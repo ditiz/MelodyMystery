@@ -1,5 +1,6 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { gradients } from "./constants";
 
 export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs));
@@ -19,3 +20,7 @@ export function cleanYoutubeVideoUrl(url: string) {
 
 	return url.substring(startIndex + 5, endIndex);
 }
+
+export const getGradient = (index: number) => {
+	return gradients[index % gradients.length];
+};
