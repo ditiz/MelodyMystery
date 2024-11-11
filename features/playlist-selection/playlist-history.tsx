@@ -1,6 +1,8 @@
 "use client";
 
+import ListItem from "@/components/custom/list-item";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { playlistHistory } from "@/lib/constants";
 import { X } from "lucide-react";
 import Link from "next/link";
@@ -29,34 +31,40 @@ const PlaylistHistory = () => {
 	}
 
 	return (
-		<article className="w-80">
-			<h2 className="text-2xl font-bold pb-2">History</h2>
+		<Card className="w-80 bg-muted/50">
+			<CardHeader>
+				<h2 className="text-2xl font-bold pb-2">History</h2>
+			</CardHeader>
 
-			<ul className="flex flex-col gap-4">
-				{playlists.map((playlistId) => (
-					<li
-						key={playlistId}
-						className="flex items-center justify-between relative transition-all rounded outline outline-offset-2 outline-gray-800 hover:outline-gray-600 px-2"
-					>
-						<Link href={`/quizz/${playlistId}`} className="w-10/12 break-words">
-							{playlistId}
-						</Link>
-						<Button
-							variant={"ghost"}
-							size={"icon"}
-							className=""
-							onClick={() => {
-								const newPlaylists = playlists.filter((p) => p !== playlistId);
-								localStorage.setItem(playlistHistory, newPlaylists.join(";"));
-								setPlaylists(newPlaylists);
-							}}
-						>
-							{<X />}
-						</Button>
-					</li>
-				))}
-			</ul>
-		</article>
+			<CardContent>
+				<ul className="flex flex-col gap-4">
+					{playlists.map((playlistId) => (
+						<ListItem key={playlistId}>
+							<Link
+								href={`/quizz/${playlistId}`}
+								className="w-10/12 break-words"
+							>
+								{playlistId}
+							</Link>
+							<Button
+								variant={"ghost"}
+								size={"icon"}
+								className=""
+								onClick={() => {
+									const newPlaylists = playlists.filter(
+										(p) => p !== playlistId,
+									);
+									localStorage.setItem(playlistHistory, newPlaylists.join(";"));
+									setPlaylists(newPlaylists);
+								}}
+							>
+								{<X />}
+							</Button>
+						</ListItem>
+					))}
+				</ul>
+			</CardContent>
+		</Card>
 	);
 };
 
