@@ -7,10 +7,10 @@ import { AlertCircle, X } from "lucide-react";
 const ErrorMessages = () => {
 	const [errors, setErrors] = useAtom(errorsAtom);
 
-	if (!errors) return null;
+	if (!errors.length) return null;
 
 	return (
-		<div className="flex flex-col gap-4">
+		<div className="flex flex-col gap-4 w-80">
 			{errors.map((err) => (
 				<Alert key={err.message} variant={err.type} className="pr-11 relative">
 					<AlertCircle className="h-4 w-4" />
