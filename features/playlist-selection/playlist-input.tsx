@@ -63,7 +63,7 @@ const PlaylistInput = () => {
 	};
 
 	return (
-		<article className={"grid w-80"}>
+		<article className={"grid"}>
 			<Card className="grid gap-2 bg-muted/50">
 				<CardHeader>
 					<h2 className="text-2xl font-bold pb-2">Custom Playlist</h2>
@@ -96,7 +96,7 @@ const PlaylistInput = () => {
 
 					<Input onChange={(e) => setInput(e.target.value)} />
 				</CardContent>
-				<CardFooter>
+				<CardFooter className="mt-2">
 					<Button className="w-full" onClick={handleStart}>
 						Start the game
 					</Button>

@@ -31,7 +31,7 @@ const PlaylistHistory = () => {
 	}
 
 	return (
-		<Card className="w-80 bg-muted/50">
+		<Card className="bg-muted/50">
 			<CardHeader>
 				<h2 className="text-2xl font-bold pb-2">History</h2>
 			</CardHeader>
