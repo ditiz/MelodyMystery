@@ -26,7 +26,9 @@ export default function RootLayout({
 					enableSystem
 					disableTransitionOnChange
 				>
-					<>
+					<div className="relative h-full w-full dark:md:bg-slate-950">
+						<div className="absolute bottom-0 left-[-20%] right-0 top-[-10%] h-[500px] w-[500px] rounded-full dark:md:bg-[radial-gradient(circle_farthest-side,rgba(255,0,182,.15),rgba(255,255,255,0))]" />
+						<div className="absolute bottom-0 right-[-20%] top-[-10%] h-[500px] w-[500px] rounded-full dark:md:bg-[radial-gradient(circle_farthest-side,rgba(255,0,182,.15),rgba(255,255,255,0))]" />
 						<header>
 							<nav>
 								<ul className="w-full flex items-center justify-around p-2">
@@ -43,7 +45,7 @@ export default function RootLayout({
 						</header>
 
 						{children}
-					</>
+					</div>
 				</ThemeProvider>
 			</body>
 		</html>
