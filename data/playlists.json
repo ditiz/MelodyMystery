@@ -5,11 +5,6 @@
 		"description": "Modern Metal | 2024 | Updatable Playlist"
 	},
 	{
-		"id": "PL3QJxphXG1iCzpP9KcZU8EG5Z8O3HNb6X",
-		"name": "Metalcore",
-		"description": "Best of Metalcore (Updated Regularly)"
-	},
-	{
 		"id": "PLo3pNg0eiPc9QucHWnf-msi4iZZksjwP5",
 		"name": "Indie",
 		"description": "Best Chill Indie Songs: Top Indie & Alternative Indie Music (Playlist Updated in 2024)",
@@ -31,9 +26,20 @@
 		"description": "Best of Daft Punk"
 	},
 	{
+		"id": "PL3QJxphXG1iCzpP9KcZU8EG5Z8O3HNb6X",
+		"name": "Metalcore",
+		"description": "Best of Metalcore (Updated Regularly)"
+	},
+	{
 		"id": "PLnhjE0e7vZaRekYPAhmAwHL3NWwOsNcU7",
 		"name": "Anime Openings",
 		"description": "Best Anime Openings"
+	},
+	{
+		"id": "PL4BrNFx1j7E5p0FD0kFBtILUHH05EjjBI",
+		"name": "Pop Punk",
+		"description": "A collection of pop-punk music from the 1990's and early 2000's. A mixed playlist including all the greatest pop punk anthems, with a mix of rock and grunge songs!",
+		"size": 2
 	},
 	{
 		"id": "PLbehTsDXEdSfNa_fj0-Lngk_moi1zG_dM",
