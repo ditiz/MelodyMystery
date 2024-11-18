@@ -25,8 +25,8 @@ export default function Home() {
 				<PlaylistInput />
 			</div>
 			<div className="flex flex-col gap-8 md:justify-self-start">
-				<PlaylistHistory />
 				<PlaylistPresets />
+				<PlaylistHistory />
 			</div>
 		</main>
 	);

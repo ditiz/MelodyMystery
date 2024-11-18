@@ -1,6 +1,6 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { gradients } from "./constants";
+import { GRADIENTS, PLAYLIST_HISTORY } from "./constants";
 
 export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs));
@@ -22,5 +22,22 @@ export function cleanYoutubeVideoUrl(url: string) {
 }
 
 export const getGradient = (index: number) => {
-	return gradients[index % gradients.length];
+	return GRADIENTS[index % GRADIENTS.length];
+};
+
+export const getHistory = () => {
+	if (typeof window === "undefined") return [];
+
+	return (
+		(localStorage.getItem(PLAYLIST_HISTORY) ?? "")
+			.split(";")
+			// remove empty string and duplicates
+			.filter((e, i, a) => e && a.indexOf(e) === i)
+	);
+};
+
+export const deleteFromHistory = (playlistId: string) => {
+	const playlists = getHistory().filter((p) => p.split(":")[1] !== playlistId);
+	localStorage.setItem(PLAYLIST_HISTORY, playlists.join(";"));
+	return playlists;
 };

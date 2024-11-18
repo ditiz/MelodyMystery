@@ -3,32 +3,26 @@
 import ListItem from "@/components/custom/list-item";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { playlistHistory } from "@/lib/constants";
+import usePlaylistHistory from "@/hooks/usePlaylistHistory";
+import { deleteFromHistory } from "@/lib/utils";
 import { X } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
-
-const getHistory = () => {
-	if (typeof window === "undefined") return [];
-
-	return (
-		(localStorage.getItem(playlistHistory) ?? "")
-			.split(";")
-			// remove empty string and duplicates
-			.filter((e, i, a) => e && a.indexOf(e) === i)
-	);
-};
 
 const PlaylistHistory = () => {
-	const [playlists, setPlaylists] = useState<string[]>([]);
-
-	useEffect(() => {
-		setPlaylists(getHistory());
-	}, []);
+	const [playlists, setPlaylists] = usePlaylistHistory();
 
 	if (!playlists.length) {
 		return null;
 	}
+
+	const playlistsNameAndId: string[][] = playlists.map((playlistId) => {
+		return playlistId.split(":");
+	});
+
+	const handleButtonClick = (playlistId: string) => {
+		const newPlaylists = deleteFromHistory(playlistId);
+		setPlaylists(newPlaylists);
+	};
 
 	return (
 		<Card className="w-80 bg-muted/50">
@@ -38,25 +32,19 @@ const PlaylistHistory = () => {
 
 			<CardContent>
 				<ul className="flex flex-col gap-4">
-					{playlists.map((playlistId) => (
+					{playlistsNameAndId.map(([playlistName, playlistId]) => (
 						<ListItem key={playlistId}>
 							<Link
 								href={`/quizz/${playlistId}`}
 								className="w-10/12 break-words"
 							>
-								{playlistId}
+								{playlistName}
 							</Link>
 							<Button
 								variant={"ghost"}
 								size={"icon"}
 								className=""
-								onClick={() => {
-									const newPlaylists = playlists.filter(
-										(p) => p !== playlistId,
-									);
-									localStorage.setItem(playlistHistory, newPlaylists.join(";"));
-									setPlaylists(newPlaylists);
-								}}
+								onClick={() => handleButtonClick(playlistId)}
 							>
 								{<X />}
 							</Button>
