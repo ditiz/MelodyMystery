@@ -14,17 +14,18 @@ export default function Home() {
 		<main
 			className="
 				grid md:grid-cols-2 
-				p-24 sm:p-2 gap-8
+				p-4 md:p-24 gap-8
 				h-full
 				justify-items-center
 			"
 		>
-			<div className="flex flex-col gap-8 md:justify-self-end">
+			<div className="flex flex-col gap-8 md:justify-self-end w-full">
 				<ErrorMessages />
 				<NbRoundInput />
 				<PlaylistInput />
 			</div>
-			<div className="flex flex-col gap-8 md:justify-self-start">
+      
+			<div className="flex flex-col gap-8 md:justify-self-start w-full">
 				<PlaylistPresets />
 				<PlaylistHistory />
 			</div>

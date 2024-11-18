@@ -21,7 +21,7 @@ const NbRoundInput = () => {
 	};
 
 	return (
-		<Card className="bg-muted/50 w-80">
+		<Card className="bg-muted/50">
 			<CardHeader>
 				<label htmlFor="nb-round" className="text-2xl font-bold pb-2">
 					Number of round

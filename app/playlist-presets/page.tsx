@@ -7,7 +7,7 @@ export default function PlaylistPresets() {
 	const playlistPresetsItems: PlaylistPreset[] = dataPlaylistPresets;
 
 	return (
-		<article className="mx-24 grid gap-6">
+		<article className="mx-4 md:mx-24 grid gap-6">
 			<h2 className="text-2xl font-bold pb-2">Playlist Presets</h2>
 			<section className="grid md:grid-cols-3 gap-4">
 				{playlistPresetsItems.map((playlist, index) => (
