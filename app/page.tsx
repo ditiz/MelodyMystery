@@ -26,7 +26,6 @@ export default function Home() {
 			</div>
       
 			<div className="flex flex-col gap-8 md:justify-self-start w-full">
-				<PlaylistHistory />
 				<PlaylistPresets />
 				<PlaylistHistory />
 			</div>
