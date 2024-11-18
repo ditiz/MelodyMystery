@@ -2,12 +2,20 @@ import ListItem from "@/components/custom/list-item";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import dataPlaylistPresets from "@/data/playlists.json";
+import { PLAYLIST_HISTORY } from "@/lib/constants";
 import type { PlaylistPreset } from "@/types/Playlist";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 
 const PlaylistPresets = () => {
 	const playlistPresets: PlaylistPreset[] = dataPlaylistPresets.slice(0, 4);
+
+	const addToHistory = (playlist: PlaylistPreset) => {
+		localStorage.setItem(
+			PLAYLIST_HISTORY,
+			`${localStorage.getItem(PLAYLIST_HISTORY) ?? ""};${playlist.name}:${playlist.id}`,
+		);
+	};
 
 	return (
 		<Card className="bg-muted/50">
@@ -22,6 +30,7 @@ const PlaylistPresets = () => {
 							<Link
 								href={`/quizz/${playlist.id}`}
 								className="w-10/12 break-words"
+								onClick={() => addToHistory(playlist)}
 							>
 								{playlist.name}
 							</Link>

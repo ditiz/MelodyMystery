@@ -8,42 +8,40 @@ import {
 	CardHeader,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import {
-	Tooltip,
-	TooltipContent,
-	TooltipProvider,
-	TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { playlistHistory } from "@/lib/constants";
+import { PLAYLIST_HISTORY } from "@/lib/constants";
 import { cleanYoutubeVideoUrl } from "@/lib/utils";
 import { errorsAtom } from "@/state/music-quizz";
 import { useAtom } from "jotai";
-import { CircleHelp } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import LabelInputPlaylistId from "./label-input-playlist-id";
 
 const PlaylistInput = () => {
 	const [, setErrors] = useAtom(errorsAtom);
 
-	const [input, setInput] = useState("");
+	const [playlistId, setPlaylistId] = useState("");
+	const [playlistName, setPlaylistName] = useState("");
 
 	const router = useRouter();
 
 	const handleStart = () => {
-		let playlistId = input.trim();
+		let cleanedPlaylistId = playlistId.trim();
+		let cleanedPlaylistName = playlistName.trim();
 
 		// clean url
-		if (playlistId.includes("https://www.youtube.com/playlist")) {
-			playlistId = playlistId.replace(
+		if (cleanedPlaylistId.includes("https://www.youtube.com/playlist")) {
+			cleanedPlaylistId = cleanedPlaylistId.replace(
 				"https://www.youtube.com/playlist?list=",
 				"",
 			);
-		} else if (playlistId.startsWith("https://www.youtube.com/watch")) {
-			// biome-ignore lint/style/noNonNullAssertion: new warning
-			playlistId = cleanYoutubeVideoUrl(playlistId)! ?? playlistId;
+		} else if (cleanedPlaylistId.startsWith("https://www.youtube.com/watch")) {
+			cleanedPlaylistId =
+				// biome-ignore lint/style/noNonNullAssertion: new rule
+				cleanYoutubeVideoUrl(cleanedPlaylistId)! ?? cleanedPlaylistId;
 		}
 
-		if (!playlistId) {
+		// handle error
+		if (!cleanedPlaylistId) {
 			setErrors((e) => [
 				...e,
 				{
@@ -54,12 +52,16 @@ const PlaylistInput = () => {
 			return;
 		}
 
+		if (!cleanedPlaylistName) {
+			cleanedPlaylistName = "Custom Playlist";
+		}
+
 		localStorage.setItem(
-			playlistHistory,
-			`${localStorage.getItem(playlistHistory) ?? ""};${playlistId}`,
+			PLAYLIST_HISTORY,
+			`${localStorage.getItem(PLAYLIST_HISTORY) ?? ""};${cleanedPlaylistName}:${cleanedPlaylistId}`,
 		);
 
-		router.push(`/quizz/${playlistId}`);
+		router.push(`/quizz/${cleanedPlaylistId}`);
 	};
 
 	return (
@@ -68,33 +70,26 @@ const PlaylistInput = () => {
 				<CardHeader>
 					<h2 className="text-2xl font-bold pb-2">Custom Playlist</h2>
 				</CardHeader>
-				<CardContent>
-					<TooltipProvider>
-						<Tooltip>
-							<TooltipTrigger>
-								<p className="flex m-2 gap-2">
-									Playlist id
-									<CircleHelp />
-								</p>
-							</TooltipTrigger>
-							<TooltipContent>
-								<h2>How to Get a YouTube Playlist ID</h2>
-								<p>1. Open the playlist on YouTube.</p>
-								<p>
-									2. Look at the URL, e.g.,{" "}
-									<code>
-										https://www.youtube.com/playlist?list=PL9tY0BWXOZFta3_NWugU1o72a6Ae-bD7V
-									</code>
-								</p>
-								<p>
-									3. The ID is the part after <code>list=</code>, here:{" "}
-									<strong>PL9tY0BWXOZFta3_NWugU1o72a6Ae</strong>
-								</p>
-							</TooltipContent>
-						</Tooltip>
-					</TooltipProvider>
-
-					<Input onChange={(e) => setInput(e.target.value)} />
+				<CardContent className="grid gap-4">
+					<section>
+						<LabelInputPlaylistId />
+						<Input
+							id="playlist-id"
+							onChange={(e) => setPlaylistId(e.target.value)}
+						/>
+					</section>
+					<section>
+						<label
+							className="flex mb-2 gap-2 align-center"
+							htmlFor="playlist-name"
+						>
+							Playlist name <small>(optional)</small>
+						</label>
+						<Input
+							id="playlist-name"
+							onChange={(e) => setPlaylistName(e.target.value)}
+						/>
+					</section>
 				</CardContent>
 				<CardFooter className="mt-2">
 					<Button className="w-full" onClick={handleStart}>

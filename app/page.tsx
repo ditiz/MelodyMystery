@@ -24,9 +24,11 @@ export default function Home() {
 				<NbRoundInput />
 				<PlaylistInput />
 			</div>
+      
 			<div className="flex flex-col gap-8 md:justify-self-start w-full">
 				<PlaylistHistory />
 				<PlaylistPresets />
+				<PlaylistHistory />
 			</div>
 		</main>
 	);
