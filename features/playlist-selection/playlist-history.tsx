@@ -15,9 +15,11 @@ const PlaylistHistory = () => {
 		return null;
 	}
 
-	const playlistsNameAndId: string[][] = playlists.map((playlistId) => {
-		return playlistId.split(":");
-	});
+	const playlistsNameAndId: string[][] = playlists
+		.toReversed()
+		.map((playlistId) => {
+			return playlistId.split(":");
+		});
 
 	const handleButtonClick = (playlistId: string) => {
 		const newPlaylists = deleteFromHistory(playlistId);
