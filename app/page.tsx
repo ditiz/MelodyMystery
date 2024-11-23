@@ -19,13 +19,13 @@ export default function Home() {
 				justify-items-center
 			"
 		>
-			<div className="flex flex-col gap-8 md:justify-self-end w-full">
+			<div className="flex flex-col gap-8 md:justify-self-end w-full md:max-w-xl">
 				<ErrorMessages />
 				<NbRoundInput />
 				<PlaylistInput />
 			</div>
 
-			<div className="flex flex-col gap-8 md:justify-self-start w-full">
+			<div className="flex flex-col gap-8 md:justify-self-start w-full md:max-w-xl">
 				<PlaylistPresets />
 				<PlaylistHistory />
 			</div>

@@ -30,15 +30,7 @@ export default function RootLayout({
 					disableTransitionOnChange
 				>
 					<div className="relative h-full w-full dark:md:bg-slate-950">
-						<div
-							className="absolute top-[-75%] left-[25%] h-[1000px] w-[1000px] rounded-full"
-							style={{
-								filter: "blur(150px)",
-								opacity: 0.5,
-								background:
-									"conic-gradient(rgb(87, 35, 245) 20deg, rgb(250, 0, 255) 110deg, rgb(255, 140, 0) 200deg, rgb(241, 35, 182) 280deg, rgb(87, 35, 245) 350deg)",
-							}}
-						/>
+						<div className="absolute top-[-75%] left-[20%] h-[1000px] w-[1000px] rounded-full blur-[150px] opacity-50 bg-conic-gradient" />
 						<header className="relative">
 							<nav>
 								<ul className="w-full flex items-center justify-around p-2">

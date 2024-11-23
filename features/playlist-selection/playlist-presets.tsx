@@ -18,7 +18,7 @@ const PlaylistPresets = () => {
 	};
 
 	return (
-		<Card className="bg-slate-900">
+		<Card className="dark:bg-slate-900 bg-white">
 			<CardHeader>
 				<h2 className="text-2xl font-bold pb-2">Playlist Presets</h2>
 			</CardHeader>
@@ -39,7 +39,10 @@ const PlaylistPresets = () => {
 				</ul>
 
 				<Link href={"/playlist-presets"}>
-					<Button className="w-full flex gap-2" variant={"secondary"}>
+					<Button
+						className="w-full flex gap-2 dark:hover:bg-slate-600 hover:bg-slate-200"
+						variant={"secondary"}
+					>
 						Explore more <ArrowRight className="size-4" />
 					</Button>
 				</Link>

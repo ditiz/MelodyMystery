@@ -66,7 +66,7 @@ const PlaylistInput = () => {
 
 	return (
 		<article className={"grid"}>
-			<Card className="grid gap-2 bg-slate-900">
+			<Card className="grid gap-2 dark:bg-slate-900 bg-white">
 				<CardHeader>
 					<h2 className="text-2xl font-bold pb-2">Custom Playlist</h2>
 				</CardHeader>
