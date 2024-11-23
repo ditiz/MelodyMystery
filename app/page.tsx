@@ -11,7 +11,7 @@ export default function Home() {
 	useResetQuizz();
 
 	return (
-		<main
+		<article
 			className="
 				grid md:grid-cols-2 
 				p-4 md:p-24 gap-8
@@ -24,11 +24,11 @@ export default function Home() {
 				<NbRoundInput />
 				<PlaylistInput />
 			</div>
-      
+
 			<div className="flex flex-col gap-8 md:justify-self-start w-full">
 				<PlaylistPresets />
 				<PlaylistHistory />
 			</div>
-		</main>
+		</article>
 	);
 }

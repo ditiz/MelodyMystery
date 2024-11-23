@@ -14,7 +14,7 @@ const PlaylistPresetItem = ({
 			<article
 				className={`h-full bg-gradient-to-br ${borderColor} p-1 rounded-lg`}
 			>
-				<Card key={playlist.id} className="h-full">
+				<Card key={playlist.id} className="h-full bg-slate-900">
 					<CardHeader>
 						<h3 className="text-xl font-bold">{playlist.name}</h3>
 					</CardHeader>
