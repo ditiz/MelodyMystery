@@ -8,6 +8,7 @@ import Actions from "./actions";
 import Choices from "./choices";
 import DisplayScore from "./display-score";
 import Result from "./result";
+import VolumeControl from "./volume-control";
 import YoutubePlayers from "./youtube-players";
 
 const MusicElement = () => {
@@ -19,7 +20,10 @@ const MusicElement = () => {
 		<article className="flex flex-col items-center gap-6">
 			{player ? (
 				<>
-					<DisplayScore />
+					<div className="flex gap-6 items-center">
+						<DisplayScore />
+						<VolumeControl />
+					</div>
 					<Choices />
 					<Result />
 					<Actions />

@@ -29,7 +29,7 @@ export default function RootLayout({
 					enableSystem
 					disableTransitionOnChange
 				>
-					<div className="relative h-full w-full dark:md:bg-slate-950">
+					<div className="relative h-full w-full">
 						<div
 							className="fixed top-[-75%] md:left-[20%] h-[1000px] w-[1000px] 
 								rounded-full blur-[150px] opacity-50 bg-conic-gradient animate-spin-slow"
