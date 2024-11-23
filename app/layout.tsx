@@ -2,6 +2,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { ModeToggle } from "@/components/ui/mode-toggle";
 import type { Metadata } from "next";
 import { Lexend, Lexend_Exa } from "next/font/google";
+import Image from "next/image";
 import Link from "next/link";
 import "./globals.css";
 
@@ -42,7 +43,8 @@ export default function RootLayout({
 							<nav>
 								<ul className="w-full flex items-center justify-around p-2">
 									<li>
-										<Link href={"/"}>
+										<Link href={"/"} className="flex gap-2">
+											<Image src="logo.svg" alt="logo" width={25} height={25} />
 											<h1 className={`${lexendExa.className}`}>
 												Melody Mystery
 											</h1>
