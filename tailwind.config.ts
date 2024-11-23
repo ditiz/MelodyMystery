@@ -71,6 +71,11 @@ module.exports = {
 			animation: {
 				"accordion-down": "accordion-down 0.2s ease-out",
 				"accordion-up": "accordion-up 0.2s ease-out",
+				"spin-slow": "spin 20s linear infinite",
+			},
+			backgroundImage: {
+				"conic-gradient":
+					"conic-gradient(rgb(87, 35, 245) 20deg, rgb(250, 0, 255) 110deg, rgb(255, 140, 0) 200deg, rgb(241, 35, 182) 280deg, rgb(87, 35, 245) 350deg)",
 			},
 		},
 	},

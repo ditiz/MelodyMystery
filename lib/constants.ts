@@ -6,4 +6,5 @@ export const GRADIENTS = [
 	"from-indigo-400 via-purple-500 to-pink-500",
 	"from-yellow-400 via-red-500 to-pink-500",
 	"from-blue-400 via-purple-500 to-indigo-500",
+	"from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90%",
 ];

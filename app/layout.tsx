@@ -1,11 +1,14 @@
 import { ThemeProvider } from "@/components/theme-provider";
 import { ModeToggle } from "@/components/ui/mode-toggle";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Lexend, Lexend_Exa } from "next/font/google";
+import Image from "next/image";
 import Link from "next/link";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const lexend = Lexend({ subsets: ["latin"] });
+
+const lexendExa = Lexend_Exa({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
 	title: "Melody Mystery",
@@ -19,20 +22,24 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang="en">
-			<body className={`${inter.className} w-scren min-h-screen`}>
+			<body className={`${lexend.className} w-scren min-h-screen`}>
 				<ThemeProvider
 					attribute="class"
 					defaultTheme="system"
 					enableSystem
 					disableTransitionOnChange
 				>
-					<>
-						<header>
+					<div className="relative h-full w-full dark:md:bg-slate-950">
+						<div className="absolute top-[-75%] left-[20%] h-[1000px] w-[1000px] rounded-full blur-[150px] opacity-50 bg-conic-gradient animate-spin-slow" />
+						<header className="relative">
 							<nav>
 								<ul className="w-full flex items-center justify-around p-2">
 									<li>
-										<Link href={"/"}>
-											<h1>Melody Mystery</h1>
+										<Link href={"/"} className="flex gap-2">
+											<Image src="logo.svg" alt="logo" width={25} height={25} />
+											<h1 className={`${lexendExa.className}`}>
+												Melody Mystery
+											</h1>
 										</Link>
 									</li>
 									<li>
@@ -42,8 +49,8 @@ export default function RootLayout({
 							</nav>
 						</header>
 
-						{children}
-					</>
+						<main className="relative">{children}</main>
+					</div>
 				</ThemeProvider>
 			</body>
 		</html>
