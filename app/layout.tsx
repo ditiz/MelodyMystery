@@ -1,11 +1,13 @@
 import { ThemeProvider } from "@/components/theme-provider";
 import { ModeToggle } from "@/components/ui/mode-toggle";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Lexend, Lexend_Exa } from "next/font/google";
 import Link from "next/link";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const lexend = Lexend({ subsets: ["latin"] });
+
+const lexendExa = Lexend_Exa({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
 	title: "Melody Mystery",
@@ -19,7 +21,7 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang="en">
-			<body className={`${inter.className} w-scren min-h-screen`}>
+			<body className={`${lexend.className} w-scren min-h-screen`}>
 				<ThemeProvider
 					attribute="class"
 					defaultTheme="system"
@@ -41,7 +43,9 @@ export default function RootLayout({
 								<ul className="w-full flex items-center justify-around p-2">
 									<li>
 										<Link href={"/"}>
-											<h1>Melody Mystery</h1>
+											<h1 className={`${lexendExa.className}`}>
+												Melody Mystery
+											</h1>
 										</Link>
 									</li>
 									<li>
