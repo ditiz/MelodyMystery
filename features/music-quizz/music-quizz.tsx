@@ -20,16 +20,16 @@ const MusicElement = () => {
 		<article className="flex flex-col items-center gap-6">
 			{player ? (
 				<>
-					<div className="flex gap-6 items-center">
+					<section className="flex gap-6 items-center">
 						<DisplayScore />
 						<VolumeControl />
-					</div>
+					</section>
 					<Choices />
 					<Result />
 					<Actions />
 				</>
 			) : (
-				<Loader />
+				<Loader className="h-16 w-16" />
 			)}
 			<YoutubePlayers />
 		</article>
