@@ -103,13 +103,12 @@ const YoutubePlayers = () => {
 			<section className={`${show ? "flex" : "hidden"} flex-col lg:flex-row`}>
 				<YouTube
 					onReady={async (e: YouTubeEvent) => {
-						console.log(e);
 						e.target.setShuffle(true);
 						e.target.nextVideo();
 						e.target.pauseVideo();
 
 						// Reduce the volume to 50%
-						e.target.setVolume(70);
+						e.target.setVolume(50);
 
 						// wait for the next video to be loaded
 						while (!e.target.getVideoData().video_id) {

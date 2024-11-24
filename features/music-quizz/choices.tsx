@@ -23,7 +23,7 @@ const Choices = () => {
 	const [videos] = useAtom(videosAtom);
 
 	if (videos.length !== 4) return null;
-	if (videos.some((v) => !v.name)) return <Loader />;
+	if (videos.some((v) => !v.name)) return <Loader className="h-16 w-16" />;
 
 	return (
 		<section className="choice grid gap-6 grid-cols-1 lg:grid-cols-2 w-auto max-w-[90vh]">
